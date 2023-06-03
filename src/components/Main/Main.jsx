@@ -215,7 +215,7 @@ function Main() {
               <img
                 className="w-14 h-14"
                 src={passportWithVisaIMG.src}
-                alt="lmfao"
+                alt=""
               />
               Updated list of all&nbsp;
               <strong className="flex flex-nowrap w-fit font-500 text-2xl font-large text-center text-gray-950">
@@ -225,7 +225,7 @@ function Main() {
               <img
                 className="w-14 h-14 pb-1.5"
                 src={visaStampIMG.src}
-                alt="lmfao"
+                alt=""
               />
             </p>
           </div>
