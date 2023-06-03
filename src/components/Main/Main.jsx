@@ -207,7 +207,7 @@ function Main() {
                 src={logo.src}
                 width="50rem"
                 alt=""
-                srcset=""
+                srcSet=""
               />
             </h2>
             <p className="z-1 flex flex-col lg:flex-row items-center align-cetner justify-center text-lg font-medium min-w-full border rounded-lg border-gray-300 bg-gradient-to-b from-zinc-200 pb-4 pt-4 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:rounded-xl">
