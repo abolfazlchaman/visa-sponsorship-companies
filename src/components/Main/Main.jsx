@@ -107,7 +107,7 @@ function Main() {
     <section
       id="main"
       className="flex flex-col w-full h-fit">
-      <form className="z-10 py-5 min-h-fit space-y-3 lg:space-y-0 flex flex-col lg:flex-row justify-center align-center sticky top-0 bg-black border-b border-gray-300 bg-gradient-to-b from-zinc-200 backdrop-blur-3xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit">
+      <form className="z-10 py-5 h-fit space-y-3 lg:space-y-0 flex flex-col lg:flex-row justify-center align-center sticky top-0 bg-black border-b border-t border-gray-300 bg-gradient-to-b from-zinc-200 backdrop-blur-3xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit">
         <div className="justify-self-center self-center flex flex-row w-full justify-center">
           <CountryDropdown
             showDefaultOption={true}
