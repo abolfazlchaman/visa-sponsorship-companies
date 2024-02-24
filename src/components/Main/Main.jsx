@@ -12,6 +12,8 @@ import italyData from '../../data/italy.json';
 import netherlandsData from '../../data/netherlands.json';
 import newzealandData from '../../data/new-zealand.json';
 import norwayData from '../../data/norway.json';
+import turkeyData from '../../data/turkey.json';
+import denmarkData from '../../data/Denmark.json';
 import spainData from '../../data/spain.json';
 import swedenData from '../../data/sweden.json';
 import Card from '../Card/Card';
@@ -92,6 +94,12 @@ function Main() {
       case 'Norway':
         setSelectedCountryData(norwayData);
         break;
+      case 'Denmark':
+        setSelectedCountryData(denmarkData);
+        break;
+      case 'Turkey':
+        setSelectedCountryData(turkeyData);
+        break;
       case 'Spain':
         setSelectedCountryData(spainData);
         break;
@@ -112,7 +120,22 @@ function Main() {
           <CountryDropdown
             showDefaultOption={true}
             defaultOptionLabel="Show companies from all countries"
-            whitelist={['AT', 'GB', 'FI', 'FR', 'DE', 'IE', 'IT', 'NL', 'NZ', 'NO', 'ES', 'SE']}
+            whitelist={[
+              'AT',
+              'GB',
+              'FI',
+              'FR',
+              'DE',
+              'IE',
+              'IT',
+              'NL',
+              'NZ',
+              'NO',
+              'ES',
+              'SE',
+              'TR',
+              'DK',
+            ]}
             name="country"
             className="w-[80vw] md:w-[80vw] lg:w-[25vw] font-mono bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             value={country}
