@@ -1,40 +1,18 @@
 'use client';
-import { CountryDropdown, RegionDropdown, CountryRegionData } from 'react-country-region-selector';
+import { CountryDropdown } from 'react-country-region-selector';
 import { useEffect, useState } from 'react';
 
-import austriaData from '../../data/austria.json';
-import englandData from '../../data/england.json';
-import finlandData from '../../data/finland.json';
-import franceData from '../../data/france.json';
-import germanyData from '../../data/germany.json';
-import irelandData from '../../data/ireland.json';
-import italyData from '../../data/italy.json';
-import netherlandsData from '../../data/netherlands.json';
-import newzealandData from '../../data/new-zealand.json';
-import norwayData from '../../data/norway.json';
-import turkeyData from '../../data/turkey.json';
-import denmarkData from '../../data/Denmark.json';
-import spainData from '../../data/spain.json';
-import swedenData from '../../data/sweden.json';
+import { ALL_COUNTRIES, countryDataAliases } from '@/data';
+
 import Card from '../Card/Card';
 
 import logo from './../../../public/favicon.ico';
+// import passportIMG from '@/images/icons8-passport-100.png';
+import passportWithVisaIMG from '@/images/icons8-passport-with-visa-100.png';
+import visaStampIMG from '@/images/icons8-visa-stamp-100.png';
 
-import passportIMG from '../../images/icons8-passport-100.png';
-import passportWithVisaIMG from '../../images/icons8-passport-with-visa-100.png';
-import visaStampIMG from '../../images/icons8-visa-stamp-100.png';
-import ALL_COUNTRIES from '@/data';
-
-function Main() {
+export default function Main() {
   const [allCountriesData, setAllCountriesData] = useState(ALL_COUNTRIES);
-
-  //sort alphabetically
-  const AtoZ = allCountriesData.sort((a, b) =>
-    a.name !== b.name ? (a.name < b.name ? -1 : 1) : 0,
-  );
-  const ZtoA = allCountriesData.sort((a, b) =>
-    a.name !== b.name ? (a.name > b.name ? -1 : 1) : 0,
-  );
 
   const allIndustriesData = [];
   allCountriesData
@@ -57,58 +35,9 @@ function Main() {
     setShowNothingFound(false);
   }, [country, selectedCountryData, industry, employeeCountFilter]);
 
-  //   const [region, setRegion] = useState('');
   useEffect(() => {
     setSelectedCountryData('');
-    switch (country) {
-      case '':
-        setSelectedCountryData(allCountriesData);
-        break;
-      case 'Austria':
-        setSelectedCountryData(austriaData);
-        break;
-      case 'United Kingdom':
-        setSelectedCountryData(englandData);
-        break;
-      case 'Finland':
-        setSelectedCountryData(finlandData);
-        break;
-      case 'France':
-        setSelectedCountryData(franceData);
-        break;
-      case 'Germany':
-        setSelectedCountryData(germanyData);
-        break;
-      case 'Ireland':
-        setSelectedCountryData(irelandData);
-        break;
-      case 'Italy':
-        setSelectedCountryData(italyData);
-        break;
-      case 'Netherlands':
-        setSelectedCountryData(netherlandsData);
-        break;
-      case 'New Zealand':
-        setSelectedCountryData(newzealandData);
-        break;
-      case 'Norway':
-        setSelectedCountryData(norwayData);
-        break;
-      case 'Denmark':
-        setSelectedCountryData(denmarkData);
-        break;
-      case 'Turkey':
-        setSelectedCountryData(turkeyData);
-        break;
-      case 'Spain':
-        setSelectedCountryData(spainData);
-        break;
-      case 'Sweden':
-        setSelectedCountryData(swedenData);
-        break;
-      default:
-        break;
-    }
+    setSelectedCountryData(countryDataAliases[country] || allCountriesData);
   }, [country]);
 
   return (
@@ -122,10 +51,12 @@ function Main() {
             defaultOptionLabel="Show companies from all countries"
             whitelist={[
               'AT',
-              'GB',
+              'BE',
+              'DK',
               'FI',
-              'FR',
               'DE',
+              'FR',
+              'GB',
               'IE',
               'IT',
               'NL',
@@ -134,33 +65,12 @@ function Main() {
               'ES',
               'SE',
               'TR',
-              'DK',
             ]}
             name="country"
             className="w-[80vw] md:w-[80vw] lg:w-[25vw] font-mono bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             value={country}
             onChange={(val) => setCountry(val)}
           />
-
-          {/* TODO when the data gets bigger and more accurate add the region filter too */}
-          {/* <RegionDropdown
-            whitelist={{
-              GB: ['STN', 'LND'],
-              AT: ['9'],
-              FI: ['18'],
-              FR: ['75C'],
-              DE: ['BY', 'RP', 'NI', 'HE'],
-              GR: ['BY', 'RP', 'NI', 'HE'],
-            }}
-            showDefaultOption={true}
-            defaultOptionLabel="see all regions"
-            disableWhenEmpty={true}
-            name="country"
-            className="w-80 font-mono bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            country={country}
-            value={region}
-            onChange={(val) => setRegion(val)}
-          /> */}
         </div>
         {allIndustriesData?.length > 0 && (
           <div className="justify-self-center self-center flex flex-row w-full justify-center">
@@ -257,80 +167,78 @@ function Main() {
       <div className="flex container min-w-[100%] p-[18px] align-center justify-center">
         <div className="flex flex-row flex-wrap pt-8 pb-8 h-fit w-100 align-around justify-around">
           {selectedCountryData &&
-            selectedCountryData?.length > 0 &&
-            selectedCountryData?.map((company) =>
-              industry !== 'all' ? (
-                company.industry.toLowerCase() === industry.toLowerCase() && (
-                  <Card props={company} />
-                )
-              ) : employeeCountFilter[0] !== 'all' ? (
-                (company['number-of-employees'].includes('-')
-                  ? parseInt(company['number-of-employees'].split('-')[0]) >= employeeCountFilter[0]
-                  : parseInt(company['number-of-employees']) >= employeeCountFilter[0]) &&
-                (company['number-of-employees'].includes('-')
-                  ? parseInt(company['number-of-employees'].split('-')[1]) <= employeeCountFilter[1]
-                  : parseInt(company['number-of-employees']) <= employeeCountFilter[1]) && (
-                  <Card props={company} />
-                )
-              ) : industry !== 'all' && employeeCountFilter[0] !== 'all' ? (
-                company.industry.toLowerCase() === industry.toLowerCase() &&
-                (company['number-of-employees'].includes('-')
-                  ? parseInt(company['number-of-employees'].split('-')[0]) >= employeeCountFilter[0]
-                  : parseInt(company['number-of-employees']) >= employeeCountFilter[0]) &&
-                (company['number-of-employees'].includes('-')
-                  ? parseInt(company['number-of-employees'].split('-')[1]) <= employeeCountFilter[1]
-                  : parseInt(company['number-of-employees']) <= employeeCountFilter[1]) && (
-                  <Card props={company} />
-                )
-              ) : country === '' && industry !== 'all' && employeeCountFilter[0] === 'all' ? (
-                company.industry.toLowerCase() === industry.toLowerCase() && (
-                  <Card props={company} />
-                )
-              ) : country === '' && industry === 'all' && employeeCountFilter[0] !== 'all' ? (
-                (company['number-of-employees'].includes('-')
-                  ? parseInt(company['number-of-employees'].split('-')[0]) >= employeeCountFilter[0]
-                  : parseInt(company['number-of-employees']) >= employeeCountFilter[0]) &&
-                (company['number-of-employees'].includes('-')
-                  ? parseInt(company['number-of-employees'].split('-')[1]) <= employeeCountFilter[1]
-                  : parseInt(company['number-of-employees']) <= employeeCountFilter[1]) && (
-                  <Card props={company} />
-                )
-              ) : country !== '' && industry !== 'all' && employeeCountFilter[0] !== 'all' ? (
-                company?.country?.toLowerCase() === country?.toLowerCase() &&
-                company?.industry?.toLowerCase() === industry?.toLowerCase() &&
-                (company['number-of-employees'].includes('-')
-                  ? parseInt(company['number-of-employees'].split('-')[0]) >= employeeCountFilter[0]
-                  : parseInt(company['number-of-employees']) >= employeeCountFilter[0]) &&
-                (company['number-of-employees'].includes('-')
-                  ? parseInt(company['number-of-employees'].split('-')[1]) <= employeeCountFilter[1]
-                  : parseInt(company['number-of-employees']) <= employeeCountFilter[1]) && (
-                  <Card props={company} />
-                )
-              ) : country === '' && industry !== 'all' && employeeCountFilter[0] !== 'all' ? (
-                company?.industry?.toLowerCase() === industry?.toLowerCase() &&
-                (company['number-of-employees'].includes('-')
-                  ? parseInt(company['number-of-employees'].split('-')[0]) >= employeeCountFilter[0]
-                  : parseInt(company['number-of-employees']) >= employeeCountFilter[0]) &&
-                (company['number-of-employees'].includes('-')
-                  ? parseInt(company['number-of-employees'].split('-')[1]) <= employeeCountFilter[1]
-                  : parseInt(company['number-of-employees']) <= employeeCountFilter[1]) && (
-                  <Card props={company} />
-                )
-              ) : country !== '' && industry === 'all' && employeeCountFilter[0] === 'all' ? (
-                company?.country?.toLowerCase() === country?.toLowerCase() && (
-                  <Card props={company} />
-                )
-              ) : country === '' && industry === 'all' && employeeCountFilter[0] === 'all' ? (
-                <Card props={company} />
-              ) : (
-                <Card props={company} />
-              ),
-            )}
-          {showNothingFound && <h1>LOL NIGA</h1>}
+            selectedCountryData.length > 0 &&
+            selectedCountryData.map((company) => {
+              //EMPS => Employees
+              //EMP => Employee
+
+              const countOfEMPS = company['number-of-employees'];
+              const EMPCountHasDash = countOfEMPS.includes('-');
+              const EMPCounts = EMPCountHasDash && countOfEMPS.split('-');
+              const EMPCount = (!EMPCountHasDash && parseInt(company['number-of-employees'])) || 0;
+              const lowestEmployeeCount = parseInt(EMPCounts[0]) || null;
+              const highestEmployeeCount = parseInt(EMPCounts[1]) || null;
+              const companyIndustry = company?.industry?.toLowerCase();
+              const selectedIndustry = industry?.toLowerCase();
+              const isSameIndustry = companyIndustry === selectedIndustry;
+              const companyCountry = company?.country?.toLowerCase();
+              const selectedCountry = country?.toLowerCase();
+              const isSameCountry = companyCountry === selectedCountry;
+              const isCountryEmptyString = country === '';
+              const isIndustryAll = industry === 'all';
+              const generateACart = <Card props={company} />;
+              const EMPCountFilterLowest = employeeCountFilter[0];
+              const EMPCountFilterHighest = employeeCountFilter[1];
+              const isEMPCountFilterAll = EMPCountFilterLowest === 'all';
+
+              return !isIndustryAll
+                ? isSameIndustry && generateACart
+                : !isEMPCountFilterAll
+                ? (EMPCountHasDash
+                    ? lowestEmployeeCount >= EMPCountFilterLowest
+                    : EMPCount >= EMPCountFilterLowest) &&
+                  (EMPCountHasDash
+                    ? highestEmployeeCount <= EMPCountFilterHighest
+                    : EMPCount <= EMPCountFilterHighest) &&
+                  generateACart
+                : isCountryEmptyString && !isIndustryAll && isEMPCountFilterAll
+                ? isSameIndustry && generateACart
+                : isCountryEmptyString && isIndustryAll && !isEMPCountFilterAll
+                ? (EMPCountHasDash
+                    ? lowestEmployeeCount >= EMPCountFilterLowest
+                    : EMPCount >= EMPCountFilterLowest) &&
+                  (EMPCountHasDash
+                    ? highestEmployeeCount <= EMPCountFilterHighest
+                    : EMPCount <= EMPCountFilterHighest) &&
+                  generateACart
+                : !isCountryEmptyString && !isIndustryAll && !isEMPCountFilterAll
+                ? isSameCountry &&
+                  isSameIndustry &&
+                  (EMPCountHasDash
+                    ? lowestEmployeeCount >= EMPCountFilterLowest
+                    : EMPCount >= EMPCountFilterLowest) &&
+                  (EMPCountHasDash
+                    ? highestEmployeeCount <= EMPCountFilterHighest
+                    : EMPCount <= EMPCountFilterHighest) &&
+                  generateACart
+                : isCountryEmptyString && !isIndustryAll && !isEMPCountFilterAll
+                ? isSameIndustry &&
+                  (EMPCountHasDash
+                    ? lowestEmployeeCount >= EMPCountFilterLowest
+                    : EMPCount >= EMPCountFilterLowest) &&
+                  (EMPCountHasDash
+                    ? highestEmployeeCount <= EMPCountFilterHighest
+                    : EMPCount <= EMPCountFilterHighest) &&
+                  generateACart
+                : !isCountryEmptyString && isIndustryAll && isEMPCountFilterAll
+                ? isSameCountry && generateACart
+                : isCountryEmptyString && isIndustryAll && isEMPCountFilterAll
+                ? generateACart
+                : generateACart;
+            })}
+          {showNothingFound && <h1>No companies found !</h1>}
         </div>
       </div>
     </section>
   );
 }
-
-export default Main;
