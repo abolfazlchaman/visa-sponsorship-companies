@@ -11,14 +11,33 @@ const newZealand = require('./new-zealand.json');
 const norway = require('./norway.json');
 const spain = require('./spain.json');
 const sweden = require('./sweden.json');
-const trukey = require('./turkey.json');
+const turkey = require('./turkey.json');
 const denmark = require('./Denmark.json');
+
+const countryDataAliases = {
+  'Austria': austria,
+  'United Kingdom': england,
+  'Finland': finland,
+  'France': france,
+  'Germany': germany,
+  'Ireland': ireland,
+  'Italy': italy,
+  'Netherlands': netherlands,
+  'New Zealand': newZealand,
+  'Norway': norway,
+  'Denmark': denmark,
+  'Belgium': belgium,
+  'Turkey': turkey,
+  'Spain': spain,
+  'Sweden': sweden,
+};
 
 const ALL_COUNTRIES = () => {
   const allCountries = [];
   allCountries.push(
     ...austria,
     ...belgium,
+    ...denmark,
     ...england,
     ...finland,
     ...france,
@@ -30,11 +49,10 @@ const ALL_COUNTRIES = () => {
     ...norway,
     ...spain,
     ...sweden,
-    ...trukey,
-    ...denmark,
+    ...turkey,
   );
 
   return allCountries;
 };
 
-export default ALL_COUNTRIES;
+export { ALL_COUNTRIES, countryDataAliases };
